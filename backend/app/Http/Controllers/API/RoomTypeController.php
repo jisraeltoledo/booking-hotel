@@ -15,7 +15,7 @@ class RoomTypeController extends Controller
      */
     public function index()
     {
-        //
+        return RoomType::all ();
     }
 
     /**
@@ -26,7 +26,8 @@ class RoomTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $roomType = RoomType::create($request->all());
+        return response ()->json ($roomType, 201);
     }
 
     /**
@@ -37,7 +38,7 @@ class RoomTypeController extends Controller
      */
     public function show(RoomType $roomType)
     {
-        //
+        return $roomType;
     }
 
     /**
@@ -49,7 +50,8 @@ class RoomTypeController extends Controller
      */
     public function update(Request $request, RoomType $roomType)
     {
-        //
+        $roomType->update($request->all ());        
+        return response()->json ($roomType, 200);
     }
 
     /**
@@ -60,6 +62,7 @@ class RoomTypeController extends Controller
      */
     public function destroy(RoomType $roomType)
     {
-        //
+        $roomType->delete ();
+        return response()->json(null, 204);
     }
 }

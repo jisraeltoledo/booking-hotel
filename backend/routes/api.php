@@ -23,6 +23,6 @@ Route::apiResource('booking', 'API\BookingController');
 
 Route::apiResource('priceList', 'API\PriceListController');
 
-Route::apiResource('roon', 'API\RoomController');
+Route::apiResource('room', 'API\RoomController');
 
 Route::apiResource('roomType', 'API\RoomTypeController');

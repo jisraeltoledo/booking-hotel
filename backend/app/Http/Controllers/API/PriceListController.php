@@ -15,7 +15,7 @@ class PriceListController extends Controller
      */
     public function index()
     {
-        //
+        return PriceList::all();
     }
 
     /**
@@ -26,7 +26,8 @@ class PriceListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $priceList = PriceList::create($request->all());
+        return response ()->json ($priceList, 201);
     }
 
     /**
@@ -37,7 +38,7 @@ class PriceListController extends Controller
      */
     public function show(PriceList $priceList)
     {
-        //
+        return $priceList;
     }
 
     /**
@@ -49,7 +50,8 @@ class PriceListController extends Controller
      */
     public function update(Request $request, PriceList $priceList)
     {
-        //
+        $priceList->update($request->all ());        
+        return response()->json ($priceList, 200);
     }
 
     /**
@@ -60,6 +62,7 @@ class PriceListController extends Controller
      */
     public function destroy(PriceList $priceList)
     {
-        //
+        $priceList->delete ();
+        return response()->json(null, 204);
     }
 }
