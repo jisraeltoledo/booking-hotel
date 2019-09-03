@@ -1,35 +1,38 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    {{details.address}}
+  <div>
+    <ul>
+      <li v-for="(key, id) in keys" :key="id">
+        <strong>{{key}}:</strong>
+        {{details[key]}}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import HotelService from "@/services/HotelDetailsService.js";
-import axios from 'axios';
+import axios from "axios";
 export default {
   name: "hotel-details",
-  components: {
-    
+  components: {},
+  data() {
+    return {
+      details: {},
+      service: new HotelService(axios)
+    };
   },
-  data (){
-      return {
-          details: {},
-          service: new HotelService (axios)
-      }
+  computed: {
+    keys() {
+      return Object.keys(this.details);
+    }
   },
-  created (){
-      console.log ("created");
-    //   this.service.getAll ().then (data => {
-    //       this.details = data.data[0];
-    //       console.log (this.details);
-    //   });
-      this.service.get (1).then (data => {
-          this.details = data.data;
-          console.log (this.details);
-      })
+  created() {
+    console.log("created");
+    this.service.get(1).then(data => {
+      this.details = data.data;
+      console.log(this.details);
+    });
   }
 };
 </script>
