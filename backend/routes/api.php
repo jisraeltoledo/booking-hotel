@@ -16,3 +16,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('hotelDetails', 'API\HotelDetailsController');
+
+Route::apiResource('booking', 'API\BookingController');
+
+Route::apiResource('priceList', 'API\PriceListController');
+
+Route::apiResource('roon', 'API\RoomController');
+
+Route::apiResource('roomType', 'API\RoomTypeController');
