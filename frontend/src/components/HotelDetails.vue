@@ -3,7 +3,7 @@
     <ul>
       <li v-for="(key, id) in keys" :key="id">
         <strong>{{key}}:</strong>
-        {{details[key]}}
+        <input v-model="details[key]" :placeholder="key" @change="update">
       </li>
     </ul>
   </div>
@@ -13,9 +13,12 @@
 // @ is an alias to /src
 import HotelService from "@/services/HotelDetailsService.js";
 import axios from "axios";
+
 export default {
   name: "hotel-details",
-  components: {},
+  components: {
+      
+  },
   data() {
     return {
       details: {},
@@ -33,6 +36,12 @@ export default {
       this.details = data.data;
       console.log(this.details);
     });
+  },
+  methods:{
+      update (){
+          console.log (this.details);
+          this.service.update (this.details);
+      }
   }
 };
 </script>

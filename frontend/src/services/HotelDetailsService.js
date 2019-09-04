@@ -13,6 +13,14 @@ class HotelDetailsService {
     let self = this;
     return self.axios.get(`${self.baseUrl}/hotelDetails/${id}`);
   }
+
+  update(details) {
+    let self = this;
+    return this.axios.put(
+      `${self.baseUrl}/hotelDetails/${details.id}`,
+      details
+    );
+  }
 }
 
 export default HotelDetailsService;
