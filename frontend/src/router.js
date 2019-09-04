@@ -5,9 +5,15 @@ import Details from "@/components/Details.vue";
 import RoomsService from "./services/RoomsService";
 import List from "@/components/List.vue";
 import HotelDetailsService from "./services/HotelDetailsService";
+import RoomTypeService from "./services/RoomTypeService";
+import PriceListService from "./services/PriceList";
+import BookingService from "./services/BookingService";
 
 Vue.use(Router);
 let roomService = new RoomsService();
+let roomTypeService = new RoomTypeService();
+let priceListService = new PriceListService();
+let bookingsService = new BookingService();
 
 export default new Router({
   mode: "history",
@@ -41,6 +47,36 @@ export default new Router({
       path: "/rooms/:id",
       component: Details,
       props: { service: roomService }
+    },
+    {
+      path: "/room-types",
+      component: List,
+      props: { service: roomTypeService }
+    },
+    {
+      path: "/room-types/:id",
+      component: Details,
+      props: { service: roomTypeService }
+    },
+    {
+      path: "/price-list",
+      component: List,
+      props: { service: priceListService }
+    },
+    {
+      path: "/price-list/:id",
+      component: Details,
+      props: { service: priceListService }
+    },
+    {
+      path: "/bookings",
+      component: List,
+      props: { service: bookingsService }
+    },
+    {
+      path: "/bookings/:id",
+      component: Details,
+      props: { service: bookingsService }
     }
   ]
 });

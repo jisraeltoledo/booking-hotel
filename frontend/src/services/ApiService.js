@@ -7,7 +7,6 @@ class ApiService {
 
   getAll() {
     let self = this;
-    console.log("getAll", this.baseUrl);
     return axios.get(`${self.baseUrl}`);
   }
 

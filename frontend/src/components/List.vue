@@ -4,14 +4,24 @@
     <table class="table table-striped">
       <thead>
         <tr v-if="list[0]">
-          <th scope="col" v-for="(name, idn) in keys(list[0])" :key="idn+name">{{titleCase (name)}}</th>
+          <template v-for="(name, idn) in keys(list[0])">
+            <th scope="col" :key="idn+name" v-if="editable(name)">{{titleCase (name)}}</th>
+          </template>
         </tr>
       </thead>
-      <tr v-for="(row, idr) in list" :key="idr" class='clickable-row' @click="edit(row)" style="cursor:pointer;">
-        <td v-for="(name, idn) in keys(row)" :key="idn+''+idr">
-          <img v-if="validURL(row[name])" :src="row[name]" width="200" />
-          <template v-else>{{row[name]}}</template>
-        </td>
+      <tr
+        v-for="(row, idr) in list"
+        :key="idr"
+        class="clickable-row"
+        @click="edit(row)"
+        style="cursor:pointer;"
+      >
+        <template v-for="(name, idn) in keys(row)">
+          <td :key="idn+''+idr" v-if="editable (name)">
+            <img v-if="validURL(row[name])" :src="row[name]" width="200" />
+            <template v-else>{{row[name]}}</template>
+          </td>
+        </template>
       </tr>
     </table>
   </div>
@@ -42,9 +52,13 @@ export default {
     });
   },
   methods: {
-      edit (record){
-          window.location.href = window.location.href + '/' + record.id;
-      },
+    editable(name) {
+      console.log(name);
+      return name !== "created_at" && name !== "updated_at" && name != "id";
+    },
+    edit(record) {
+      window.location.href = window.location.href + "/" + record.id;
+    },
     titleCase(str) {
       str = str
         .replace(/_/g, " ")
