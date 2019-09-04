@@ -1,9 +1,13 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
-import HotelDetails from "@/components/HotelDetails.vue";
+import Details from "@/components/Details.vue";
+import RoomsService from "./services/RoomsService";
+import List from "@/components/List.vue";
+import HotelDetailsService from "./services/HotelDetailsService";
 
 Vue.use(Router);
+let roomService = new RoomsService();
 
 export default new Router({
   mode: "history",
@@ -24,9 +28,19 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./views/About.vue")
     },
     {
-      path: "/hotel",
-      name: "hotel",
-      component: HotelDetails
+      path: "/hotel/:id",
+      component: Details,
+      props: { service: new HotelDetailsService() }
+    },
+    {
+      path: "/rooms",
+      component: List,
+      props: { service: roomService }
+    },
+    {
+      path: "/rooms/:id",
+      component: Details,
+      props: { service: roomService }
     }
   ]
 });
