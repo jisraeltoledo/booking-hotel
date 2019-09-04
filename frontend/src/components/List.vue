@@ -1,7 +1,17 @@
 <template>
-  <div>
+  <div class="container">
+    <button
+      class="btn btn-primary"
+      @click="createNew=true"
+      style="margin-bottom:10px"
+      v-if="!createNew"
+    >
+      <i class="fas fa-plus-square"></i> New
+    </button>
+    <create-form v-if="createNew" :detailFields="detailFields" :service="service" @created="create"></create-form>
+
     <p v-if="message">{{message}}</p>
-    <table class="table table-striped">
+    <table class="table table-striped" v-if="!createNew">
       <thead>
         <tr v-if="list[0]">
           <template v-for="(name, idn) in keys(list[0])">
@@ -29,18 +39,25 @@
 
 <script>
 import router from "@/router";
+import DetailsVue from "./Details.vue";
 export default {
+  components: {
+    "create-form": DetailsVue
+  },
   props: {
     service: Object
   },
   data() {
     return {
       list: [],
-      message: null
+      message: null,
+      createNew: false,
+      detailFields: []
     };
   },
   created() {
     console.log("created", this.service);
+    this.detailFields = this.service.fields();
     this.service.getAll().then(data => {
       this.list = data.data;
       console.log(this.list);
@@ -52,27 +69,15 @@ export default {
     });
   },
   methods: {
-    editable(name) {
-      console.log(name);
-      return name !== "created_at" && name !== "updated_at" && name != "id";
+    create(newObject) {
+      console.log("create", newObject);
+      newObject.then ( data => {
+        this.list.push(data.data);
+        this.createNew = false;
+      });      
     },
     edit(record) {
       window.location.href = window.location.href + "/" + record.id;
-    },
-    titleCase(str) {
-      str = str
-        .replace(/_/g, " ")
-        .toLowerCase()
-        .split(" ");
-      let final = [];
-
-      for (let word of str) {
-        final.push(word.charAt(0).toUpperCase() + word.slice(1));
-      }
-      return final.join(" ");
-    },
-    keys(object) {
-      return Object.keys(object);
     },
     validURL(str) {
       var pattern = new RegExp(

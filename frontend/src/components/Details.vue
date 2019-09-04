@@ -1,22 +1,31 @@
 <template>
   <div>
     <table class="table">
-      <tr v-for="(key, id) in keys" :key="id">
+      <tr v-for="(key, id) in keys(details)" :key="id">
         <td>
-          <strong>{{key}}:</strong>
+          <strong>{{titleCase (key)}}:</strong>
         </td>
         <td>
-          <input v-model="details[key]" :placeholder="key" @change="update" class="form-control" :disabled="!editable(key)"/>
+          <input
+            v-model="details[key]"
+            :placeholder="key"
+            @change="update"
+            class="form-control"
+            :disabled="!editable(key)"
+          />
         </td>
       </tr>
     </table>
+    <button class="btn btn-primary pull-right" @click="create" v-if="isNew"> 
+      <i class="fas fa-save"></i> Save </button>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    service: Object
+    service: Object,
+    detailFields: Array
   },
   data() {
     return {
@@ -24,27 +33,38 @@ export default {
       id: 0
     };
   },
-  computed: {
-    keys() {
-      return Object.keys(this.details);
+  computed :{
+    isNew (){
+      return this.detailFields != null && this.detailFields != undefined;
     }
   },
   created() {
+    console.log(this.detailFields);
     this.id = this.$route.params.id;
-    console.log("created");
-    this.service.get(this.id).then(data => {
-      this.details = data.data;
-      console.log(this.details);
-    });
+    if (this.detailFields) {
+      this.detailFields.forEach(element => {
+        this.details[element] = "";
+      });
+    } else {
+      this.loadData();
+    }
   },
   methods: {
-    editable(name) {
-      console.log(name);
-      return name !== "created_at" && name !== "updated_at" && name != "id";
-    },
     update() {
       console.log(this.details);
-      this.service.update(this.details);
+      if (! this.isNew) {        
+        this.service.update(this.details);
+      }      
+    },
+    create (){
+      let newObject = this.service.create(this.details);
+      this.$emit ("created", newObject);
+    },
+    loadData() {
+      this.service.get(this.id).then(data => {
+        this.details = data.data;
+        console.log(this.details);
+      });
     }
   }
 };
