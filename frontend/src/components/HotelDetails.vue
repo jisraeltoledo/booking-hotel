@@ -12,7 +12,6 @@
 <script>
 // @ is an alias to /src
 import HotelService from "@/services/HotelDetailsService.js";
-import axios from "axios";
 
 export default {
   name: "hotel-details",
@@ -22,7 +21,7 @@ export default {
   data() {
     return {
       details: {},
-      service: new HotelService(axios)
+      service: new HotelService()
     };
   },
   computed: {
