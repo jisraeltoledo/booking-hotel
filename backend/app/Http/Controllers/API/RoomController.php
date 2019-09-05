@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Room;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Validator;
 
 class RoomController extends Controller
 {
@@ -15,7 +16,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        return Room::all ();
+        return Room::all();
     }
 
     /**
@@ -26,8 +27,19 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'room_name' => 'required', 
+            'hotel_id' => 'required',
+            'room_type' => 'required', 
+            'room_image' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $validator->errors()->toJson();
+        }
+
         $room = Room::create($request->all());
-        return response ()->json ($room, 201);
+        return response()->json($room, 201);
     }
 
     /**
@@ -50,8 +62,9 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room)
     {
-        $room->update($request->all ());        
-        return response()->json ($room, 200);
+
+        $room->update($request->all());
+        return response()->json($room, 200);
     }
 
     /**
@@ -62,7 +75,7 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        $room->delete ();
+        $room->delete();
         return response()->json(null, 204);
     }
 }

@@ -26,6 +26,13 @@ class RoomTypeController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'room_type_name' => 'required', 
+        ]);
+
+        if ($validator->fails()) {
+            return $validator->errors()->toJson();
+        }
         $roomType = RoomType::create($request->all());
         return response ()->json ($roomType, 201);
     }

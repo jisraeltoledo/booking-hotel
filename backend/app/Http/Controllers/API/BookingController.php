@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Booking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Validator;
 
 class BookingController extends Controller
 {
@@ -15,7 +16,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        return Booking::all ();
+        return Booking::all();
     }
 
     /**
@@ -26,8 +27,22 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'date_start' => 'required',
+            'date_end' => 'required',
+            'customer_fullname' => 'required',
+            'customer_email' => 'required',
+            'customer_phone' => 'required',
+            'total_nights' => 'required',
+            'total_price' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $validator->errors()->toJson ();
+        }
         $booking = Booking::create($request->all());
-        return response ()->json ($booking, 201);
+        return response()->json($booking, 201);
     }
 
     /**
@@ -50,8 +65,8 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        $booking->update($request->all ());        
-        return response()->json ($booking, 200);
+        $booking->update($request->all());
+        return response()->json($booking, 200);
     }
 
     /**
@@ -62,7 +77,7 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        $booking->delete ();
+        $booking->delete();
         return response()->json(null, 204);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\PriceList;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Validator;
 
 class PriceListController extends Controller
 {
@@ -26,8 +27,17 @@ class PriceListController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required', 
+            'price' => 'required', 
+            'room_type' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $validator->errors()->toJson();
+        }
         $priceList = PriceList::create($request->all());
-        return response ()->json ($priceList, 201);
+        return response()->json($priceList, 201);
     }
 
     /**
@@ -50,8 +60,8 @@ class PriceListController extends Controller
      */
     public function update(Request $request, PriceList $priceList)
     {
-        $priceList->update($request->all ());        
-        return response()->json ($priceList, 200);
+        $priceList->update($request->all());
+        return response()->json($priceList, 200);
     }
 
     /**
@@ -62,7 +72,7 @@ class PriceListController extends Controller
      */
     public function destroy(PriceList $priceList)
     {
-        $priceList->delete ();
+        $priceList->delete();
         return response()->json(null, 204);
     }
 }
