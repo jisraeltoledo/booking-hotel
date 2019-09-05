@@ -16,9 +16,9 @@ class BookingssTableSeeder extends Seeder
         $faker = \Faker\Factory::create();
         
         // And now, let's create a few articles in our database:
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $format = 'Y-m-d';
-            $date = $faker->date ('Y-m-d', '01-11-2019');
+            $date = $faker->dateTimeBetween('+0 days', '+1 years')->format ('Y-m-d');
             $total_nights = $faker->numberBetween(1, 5);
             $date_start = DateTime::createFromFormat($format , $date);
             $date_end = date('Y-m-d', strtotime($date . ' + ' . $total_nights . ' days'));
