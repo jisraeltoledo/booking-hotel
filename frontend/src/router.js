@@ -8,6 +8,7 @@ import HotelDetailsService from "./services/HotelDetailsService";
 import RoomTypeService from "./services/RoomTypeService";
 import PriceListService from "./services/PriceList";
 import BookingService from "./services/BookingService";
+import Calendar from "@/components/Calendar.vue";
 
 Vue.use(Router);
 let roomService = new RoomsService();
@@ -77,6 +78,10 @@ export default new Router({
       path: "/bookings/:id",
       component: Details,
       props: { service: bookingsService }
+    },
+    {
+      path: "/calendar",
+      component: Calendar
     }
   ]
 });

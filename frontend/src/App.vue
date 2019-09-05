@@ -7,14 +7,15 @@
       <router-link to="/rooms">Rooms</router-link> |
       <router-link to="/room-types">Room Types</router-link> |
       <router-link to="/price-list">Price List</router-link> |
-      <router-link to="/bookings">Bookings</router-link>
+      <router-link to="/bookings">Bookings</router-link> |
+      <router-link to="/calendar">Calendar</router-link> |
     </div>
     <router-view />
   </div>
 </template>
 
 <style>
-#app {
+/* #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -32,5 +33,5 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>
