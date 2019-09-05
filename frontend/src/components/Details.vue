@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <table class="table">
       <tr v-for="(key, id) in keys(details)" :key="id">
         <td>
@@ -16,8 +16,12 @@
         </td>
       </tr>
     </table>
-    <button class="btn btn-primary pull-right" @click="create" v-if="isNew"> 
-      <i class="fas fa-save"></i> Save </button>
+    <button class="btn btn-primary pull-right" @click="create" v-if="isNew">
+      <i class="fas fa-save"></i> Save
+    </button>
+    <button class="btn btn-danger pull-right" @click="destroy" v-if="!isNew">
+      <i class="fas fa-trash"></i> Delete
+    </button>
   </div>
 </template>
 
@@ -33,8 +37,8 @@ export default {
       id: 0
     };
   },
-  computed :{
-    isNew (){
+  computed: {
+    isNew() {
       return this.detailFields != null && this.detailFields != undefined;
     }
   },
@@ -50,15 +54,21 @@ export default {
     }
   },
   methods: {
+    destroy (){
+      if (confirm ('Are you sure that want to delete this record?')){
+        window.location.href = window.location.href.substring (0, window.location.href.lastIndexOf('/'));
+        console.log (this.service.delete(this.details));
+      }
+    },
     update() {
       console.log(this.details);
-      if (! this.isNew) {        
+      if (!this.isNew) {
         this.service.update(this.details);
-      }      
+      }
     },
-    create (){
+    create() {
       let newObject = this.service.create(this.details);
-      this.$emit ("created", newObject);
+      this.$emit("created", newObject);
     },
     loadData() {
       this.service.get(this.id).then(data => {
