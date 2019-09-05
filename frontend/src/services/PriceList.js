@@ -5,7 +5,7 @@ class PriceListService extends ApiService {
     super("priceList");
   }
   fields() {
-    return ["name", "price"];
+    return ["name", "price", "room_type"];
   }
 }
 
