@@ -37,6 +37,11 @@ export default {
       id: 0
     };
   },
+  watch: {
+    $route(to, from) {
+      this.init();
+    }
+  },
   computed: {
     isNew() {
       return this.detailFields != null && this.detailFields != undefined;
@@ -44,20 +49,26 @@ export default {
   },
   created() {
     console.log(this.detailFields);
-    this.id = this.$route.params.id;
-    if (this.detailFields) {
-      this.detailFields.forEach(element => {
-        this.details[element] = "";
-      });
-    } else {
-      this.loadData();
-    }
+    this.init ();
   },
   methods: {
-    destroy (){
-      if (confirm ('Are you sure that want to delete this record?')){
-        window.location.href = window.location.href.substring (0, window.location.href.lastIndexOf('/'));
-        console.log (this.service.delete(this.details));
+    init() {
+      this.id = this.$route.params.id;
+      if (this.detailFields) {
+        this.detailFields.forEach(element => {
+          this.details[element] = "";
+        });
+      } else {
+        this.loadData();
+      }
+    },
+    destroy() {
+      if (confirm("Are you sure that want to delete this record?")) {
+        window.location.href = window.location.href.substring(
+          0,
+          window.location.href.lastIndexOf("/")
+        );
+        console.log(this.service.delete(this.details));
       }
     },
     update() {

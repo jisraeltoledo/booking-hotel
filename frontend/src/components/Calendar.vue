@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <FullCalendar
       defaultView="dayGridMonth"
       :plugins="calendarPlugins"
@@ -7,7 +7,6 @@
       :events="events"
       @eventClick="onClick"
     />
-    {{events}}
   </div>
 </template>
 

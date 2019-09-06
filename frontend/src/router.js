@@ -28,47 +28,47 @@ export default new Router({
     {
       path: "/hotel/:id",
       component: Details,
-      props: { service: new HotelDetailsService() }
+      props: { service: new HotelDetailsService(), key: "hotel/id" }
     },
     {
       path: "/rooms",
       component: List,
-      props: { service: roomService }
+      props: { service: roomService, key: "rooms" }
     },
     {
       path: "/rooms/:id",
       component: Details,
-      props: { service: roomService }
+      props: { service: roomService, key: "rooms/id" }
     },
     {
       path: "/room-types",
       component: List,
-      props: { service: roomTypeService }
+      props: { service: roomTypeService, key: "roomtypes" }
     },
     {
       path: "/room-types/:id",
       component: Details,
-      props: { service: roomTypeService }
+      props: { service: roomTypeService, key: "roomtypes/id" }
     },
     {
       path: "/price-list",
       component: List,
-      props: { service: priceListService }
+      props: { service: priceListService, key: "pricelist" }
     },
     {
       path: "/price-list/:id",
       component: Details,
-      props: { service: priceListService }
+      props: { service: priceListService, key: "pricelist/id" }
     },
     {
       path: "/bookings",
       component: List,
-      props: { service: bookingsService }
+      props: { service: bookingsService, key: "bookings" }
     },
     {
       path: "/bookings/:id",
       component: Details,
-      props: { service: bookingsService }
+      props: { service: bookingsService, key: "boookings/id" }
     },
     {
       path: "/calendar",

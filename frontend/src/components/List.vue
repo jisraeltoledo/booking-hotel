@@ -57,24 +57,32 @@ export default {
   },
   created() {
     console.log("created", this.service);
-    this.detailFields = this.service.fields();
-    this.service.getAll().then(data => {
-      this.list = data.data;
-      console.log(this.list);
-      if (this.list.length === 0) {
-        this.message = "There is nothing to show here";
-      } else {
-        this.message = null;
-      }
-    });
+    this.init();
+  },
+  watch: {
+    $route(to, from) {
+      this.init ();
+    }
   },
   methods: {
+    init() {
+      this.detailFields = this.service.fields();
+      this.service.getAll().then(data => {
+        this.list = data.data;
+        console.log(this.list);
+        if (this.list.length === 0) {
+          this.message = "There is nothing to show here";
+        } else {
+          this.message = null;
+        }
+      });
+    },
     create(newObject) {
       console.log("create", newObject);
-      newObject.then ( data => {
+      newObject.then(data => {
         this.list.push(data.data);
         this.createNew = false;
-      });      
+      });
     },
     edit(record) {
       window.location.href = window.location.href + "/" + record.id;
