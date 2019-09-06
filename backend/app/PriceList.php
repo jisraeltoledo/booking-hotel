@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class PriceList extends Model
 {
     protected $fillable = [
-        'name', 'price'
+        'name', 'price', 'room_type'
     ];
 }
